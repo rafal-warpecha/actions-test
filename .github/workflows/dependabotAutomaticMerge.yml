@@ -22,24 +22,14 @@ jobs:
       # GitHub blocks self-approval, so Dependabot cannot approve its own PR —
       # we use a service account (GH_API_TOKEN) instead.
       - name: Approve Dependabot PR
-        if: steps.meta.outputs.update-type == 'version-update:semver-minor'
+        if: steps.meta.outputs.update-type == 'version-update:semver-patch'
         run: gh pr review --approve "$PR_URL"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
           GH_TOKEN: ${{ secrets.GH_API_TOKEN }}
 
-      # 2-minute delay gives TeamCity time to register its checks via webhook.
-      # Without this buffer there is a race condition: the workflow fires
-      # `gh pr merge --auto` immediately after the PR is created, and if branch
-      # protection does not pin specific check names, GitHub may consider the PR
-      # mergeable (no failed checks = no blocker) and merge it before TeamCity
-      # has even started the build.
-      - name: Wait for TeamCity to register checks
-        if: steps.meta.outputs.update-type == 'version-update:semver-minor'
-        run: sleep 2
-
       - name: Enable auto-merge for patch updates
-        if: steps.meta.outputs.update-type == 'version-update:semver-minor'
+        if: steps.meta.outputs.update-type == 'version-update:semver-patch'
         run: gh pr merge --auto --squash "$PR_URL"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}

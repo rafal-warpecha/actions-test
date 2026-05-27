@@ -17,17 +17,6 @@ jobs:
         with:
           github-token: ${{ secrets.GH_API_TOKEN }}
 
-      # Service-account approval — satisfies branch protection's
-      # `required_approving_review_count` without manual human review.
-      # GitHub blocks self-approval, so Dependabot cannot approve its own PR —
-      # we use a service account (GH_API_TOKEN) instead.
-      - name: Approve Dependabot PR
-        if: steps.meta.outputs.update-type == 'version-update:semver-patch'
-        run: gh pr review --approve "$PR_URL"
-        env:
-          PR_URL: ${{ github.event.pull_request.html_url }}
-          GH_TOKEN: ${{ secrets.GH_API_TOKEN }}
-
       - name: Enable auto-merge for patch updates
         if: steps.meta.outputs.update-type == 'version-update:semver-patch'
         run: gh pr merge --auto --squash "$PR_URL"

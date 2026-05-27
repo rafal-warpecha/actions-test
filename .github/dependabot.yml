@@ -1,23 +1,8 @@
 version: 2
 
-registries:
-  binrepo-jutro-internal:
-    type: npm-registry
-    url: https://amer.binrepo.guidewire.net/artifactory/api/npm/jutro-npm-dev-internal-local
-    username: ${{secrets.BINREPO_USERNAME}}
-    password: ${{secrets.BINREPO_PASSWORD}}
-  binrepo-functions-dev:
-    type: npm-registry
-    url: https://amer.binrepo.guidewire.net/artifactory/api/npm/functions-npm-dev-local
-    username: ${{secrets.BINREPO_USERNAME}}
-    password: ${{secrets.BINREPO_PASSWORD}}
-
 updates:
   - package-ecosystem: npm
     directory: /
-    registries:
-      - binrepo-jutro-internal
-      - binrepo-functions-dev
     schedule:
       interval: weekly
       day: monday
@@ -107,24 +92,3 @@ updates:
         update-types:
           - minor
           - patch
-    # Each entry below MUST be preceded by a comment with a JIRA ticket link
-    # explaining why this dependency is ignored (Jutro and Jutro peer deps are exception).
-    ignore:
-      # Jutro 10.13.1 pinned across all packages — bumps coordinated with Jutro release cycle
-      - dependency-name: '@jutro/*'
-      # Peer dep of Jutro
-      - dependency-name: 'react'
-      # Peer dep of Jutro
-      - dependency-name: 'react-dom'
-      # Peer dep of Jutro
-      - dependency-name: 'react-router-dom'
-      # Peer dep of Jutro
-      - dependency-name: 'react-intl'
-      # Peer dep of Jutro
-      - dependency-name: 'react-transition-group'
-      # Peer dep of Jutro
-      - dependency-name: 'history'
-      # Peer dep of Jutro
-      - dependency-name: 'core-js'
-      # https://guidewirejira.atlassian.net/browse/RAE-1694
-      - dependency-name: '@gwai/*'

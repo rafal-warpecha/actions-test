@@ -20,7 +20,11 @@
     "remark-gfm": "4.0.1",
     "superjson": "2.2.2"
   },
-  "scripts": {},
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
+  },
   "browserslist": [
     "extends @jutro/browserslist-config"
   ],
@@ -32,10 +36,12 @@
     "@testing-library/jest-dom": "6.6.3",
     "@testing-library/react": "14.2.2",
     "@testing-library/user-event": "14.5.2",
+    "@types/jest": "^30.0.0",
     "@types/react": "18.2.21",
     "@types/react-router-dom": "5.3.3",
     "@typescript-eslint/eslint-plugin": "8.59.4",
     "@typescript-eslint/parser": "8.59.4",
+    "concurrently": "9.2.0",
     "cross-env": "7.0.3",
     "dotenv": "17.2.1",
     "eslint": "8.57.0",
@@ -76,13 +82,11 @@
     "stylelint-config-standard-scss": "13.1.0",
     "ts-jest": "29.3.1",
     "typescript": "5.8.2",
-    "zod": "3.25.76",
-    "concurrently": "9.2.0"
+    "zod": "3.25.76"
   },
   "engines": {
     "node": ">=22.6.0 < 23",
     "npm": ">=9.5.0"
   },
-  "packageManager": "npm@9.9.4",
-  "peerDependencies": {}
+  "packageManager": "npm@9.9.4"
 }

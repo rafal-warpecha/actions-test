@@ -29,7 +29,7 @@
     "extends @jutro/browserslist-config"
   ],
   "devDependencies": {
-    "@commitlint/cli": "19.8.0",
+    "@commitlint/cli": "21.0.1",
     "@commitlint/config-conventional": "19.8.0",
     "@commitlint/prompt-cli": "19.8.0",
     "@testing-library/dom": "10.4.1",

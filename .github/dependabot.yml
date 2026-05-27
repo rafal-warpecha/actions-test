@@ -1,0 +1,130 @@
+version: 2
+
+registries:
+  binrepo-jutro-internal:
+    type: npm-registry
+    url: https://amer.binrepo.guidewire.net/artifactory/api/npm/jutro-npm-dev-internal-local
+    username: ${{secrets.BINREPO_USERNAME}}
+    password: ${{secrets.BINREPO_PASSWORD}}
+  binrepo-functions-dev:
+    type: npm-registry
+    url: https://amer.binrepo.guidewire.net/artifactory/api/npm/functions-npm-dev-local
+    username: ${{secrets.BINREPO_USERNAME}}
+    password: ${{secrets.BINREPO_PASSWORD}}
+
+updates:
+  - package-ecosystem: npm
+    directory: /
+    registries:
+      - binrepo-jutro-internal
+      - binrepo-functions-dev
+    schedule:
+      interval: weekly
+      day: monday
+      time: '04:00'
+      timezone: Europe/Warsaw
+    open-pull-requests-limit: 10
+    versioning-strategy: increase
+    rebase-strategy: auto
+    cooldown:
+      default-days: 3
+      semver-major-days: 7
+      semver-minor-days: 3
+      semver-patch-days: 3
+    commit-message:
+      prefix: chore
+      prefix-development: chore
+      include: scope
+    labels:
+      - dependencies
+      - automated
+    groups:
+      trpc-stack:
+        patterns:
+          - '@trpc/*'
+          - '@tanstack/react-query'
+        update-types:
+          - minor
+          - patch
+      eslint-stack:
+        patterns:
+          - 'eslint'
+          - 'eslint-*'
+          - 'prettier'
+          - 'prettier-*'
+          - '@typescript-eslint/*'
+        update-types:
+          - minor
+          - patch
+      stylelint-stack:
+        patterns:
+          - 'stylelint'
+          - 'stylelint-*'
+        update-types:
+          - minor
+          - patch
+      jest-stack:
+        patterns:
+          - 'jest'
+          - 'jest-*'
+          - 'ts-jest'
+        update-types:
+          - minor
+          - patch
+      vitest-stack:
+        patterns:
+          - 'vitest'
+          - 'vitest-*'
+          - '@vitest/*'
+        update-types:
+          - minor
+          - patch
+      msw-stack:
+        patterns:
+          - 'msw'
+          - 'msw-*'
+          - 'openapi-msw'
+          - '@mswjs/*'
+        update-types:
+          - minor
+          - patch
+      testing-library-stack:
+        patterns:
+          - '@testing-library/*'
+        update-types:
+          - minor
+          - patch
+      playwright-stack:
+        patterns:
+          - '@playwright/*'
+          - 'playwright-*'
+        update-types:
+          - minor
+          - patch
+      commitlint-stack:
+        patterns:
+          - '@commitlint/*'
+        update-types:
+          - minor
+          - patch
+    # Each entry below MUST be preceded by a comment with a JIRA ticket link
+    # explaining why this dependency is ignored (Jutro and Jutro peer deps are exception).
+    ignore:
+      # Jutro 10.13.1 pinned across all packages — bumps coordinated with Jutro release cycle
+      - dependency-name: '@jutro/*'
+      # Peer dep of Jutro
+      - dependency-name: 'react'
+      # Peer dep of Jutro
+      - dependency-name: 'react-dom'
+      # Peer dep of Jutro
+      - dependency-name: 'react-router-dom'
+      # Peer dep of Jutro
+      - dependency-name: 'react-intl'
+      # Peer dep of Jutro
+      - dependency-name: 'react-transition-group'
+      # Peer dep of Jutro
+      - dependency-name: 'history'
+      # Peer dep of Jutro
+      - dependency-name: 'core-js'
+      # https://guidewirejira.atlassian.net/browse/RAE-1694
+      - dependency-name: '@gwai/*'
